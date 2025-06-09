@@ -5,6 +5,7 @@ struct Nodo {
     Nodo(int numero) {
         Proceso = numero;
         siguiente = NULL;
+        123
     }
 };
 
