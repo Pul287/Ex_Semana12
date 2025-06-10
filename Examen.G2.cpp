@@ -25,7 +25,7 @@ int cantidadProcesos = 0;
 
 void agregarProceso() {
     if (cantidadProcesos >= MAX_PROCESOS) {
-        cout << "No se pueden agregar más procesos (límite alcanzado).\n";
+        cout << "No se pueden agregar más procesos.\n";
         return;
     }
 
@@ -33,7 +33,7 @@ void agregarProceso() {
     cout << "Ingrese ID del proceso: ";
     cin >> nuevo.id;
     cout << "Ingrese nombre del proceso: ";
-    cin.ignore(); // Limpiar buffer
+    cin.ignore(); 
     getline(cin, nuevo.nombre);
     cout << "Ingrese prioridad del proceso (1-10): ";
     cin >> nuevo.prioridad;
@@ -54,6 +54,76 @@ void mostrarProcesos() {
     cout << endl;
 }
 
+void eliminarProceso() {
+    int idEliminar;
+    cout << "Ingrese el ID del proceso a eliminar: ";
+    cin >> idEliminar;
+
+    int index = -1;
+    for (int i = 0; i < cantidadProcesos; i++) {
+        if (listaProcesos[i].id == idEliminar) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
+        cout << "Proceso no encontrado.\n";
+        return;
+    }
+
+    for (int i = index; i < cantidadProcesos - 1; i++) {
+        listaProcesos[i] = listaProcesos[i + 1];
+    }
+
+    cantidadProcesos--;
+    cout << "Proceso eliminado correctamente.\n";
+}
+
+void buscarProcesoPorID() {
+    int idBuscar;
+    cout << "Ingrese el ID del proceso a buscar: ";
+    cin >> idBuscar;
+
+    bool encontrado = false;
+    for (int i = 0; i < cantidadProcesos; i++) {
+        if (listaProcesos[i].id == idBuscar) {
+            cout << "Proceso encontrado:\n";
+            cout << "ID: " << listaProcesos[i].id
+                 << ", Nombre: " << listaProcesos[i].nombre
+                 << ", Prioridad: " << listaProcesos[i].prioridad << endl;
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "Proceso no encontrado.\n";
+    }
+}
+
+void modificarID() {
+    int idActual, nuevoID;
+    cout << "Ingrese el ID del proceso a modificar: ";
+    cin >> idActual;
+
+    bool encontrado = false;
+    for (int i = 0; i < cantidadProcesos; i++) {
+        if (listaProcesos[i].id == idActual) {
+            cout << "Ingrese el nuevo ID: ";
+            cin >> nuevoID;
+            listaProcesos[i].id = nuevoID;
+            cout << "ID modificado correctamente.\n";
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "Proceso no encontrado.\n";
+    }
+}
+
 int main() {
     int opcion;
 
@@ -61,7 +131,10 @@ int main() {
         cout << "\n--- MENU ---\n";
         cout << "1. Agregar proceso\n";
         cout << "2. Mostrar procesos\n";
-        cout << "3. Salir\n";
+        cout << "3. Eliminar proceso\n";
+        cout << "4. Buscar proceso por ID\n";
+        cout << "5. Modificar ID de un proceso\n";
+        cout << "6. Salir\n";
         cout << "Seleccione una opción: ";
         cin >> opcion;
 
@@ -73,16 +146,26 @@ int main() {
                 mostrarProcesos();
                 break;
             case 3:
+                eliminarProceso();
+                break;
+            case 4:
+                buscarProcesoPorID();
+                break;
+            case 5:
+                modificarID();
+                break;
+            case 6:
                 cout << "Saliendo del programa...\n";
                 break;
             default:
                 cout << "Opción inválida. Intente nuevamente.\n";
         }
 
-    } while (opcion != 3);
+    } while (opcion != 6);
 
     return 0;
 }
+
 
 <<<<<<< HEAD
 =======
