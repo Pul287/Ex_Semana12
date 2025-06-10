@@ -35,3 +35,17 @@ void encolarProceso(int id, int tiempo, int prioridad) {
 
     cout << "Proceso numero" << id << " encolado - prioridad: " << prioridad << endl;
 }
+
+void ejecutarProceso() {
+    if (frente == NULL) {
+        cout << "No hay procesos en cola." << endl;
+        return;
+    }
+
+    Proceso* temp = frente;
+    frente = frente->siguiente;
+    cout << "Ejecutando proceso #" << temp->id
+         << " (tiempo: " << temp->tiempoEjecucion
+         << ", prioridad: " << temp->prioridad << ")" << endl;
+    delete temp;
+}
