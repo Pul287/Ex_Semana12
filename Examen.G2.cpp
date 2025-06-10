@@ -1,13 +1,3 @@
-struct Nodo {
-    int Proceso;
-    Nodo* siguiente;
-
-    Nodo(int numero) {
-        Proceso = numero;
-        siguiente = NULL;
-        123
-    }
-};
 // Erick Rodriguez
 #include <iostream>
 using namespace std;
@@ -166,9 +156,21 @@ int main() {
     return 0;
 }
 
+//Pul
+struct Proceso {
+    int id;
+    int tiempoEjecucion;
+    int prioridad;
+    Proceso* siguiente;
 
-<<<<<<< HEAD
-=======
+    Proceso(int id, int tiempo, int prioridad) {
+        idProceso = id;
+        TiempoEjecucion = tiempo;
+        Nprioridad = prioridad;
+        siguiente = NULL;
+    }
+};
+
 Proceso* frente = NULL;
 
 void encolarProceso(int id, int tiempo, int prioridad) {
@@ -185,7 +187,6 @@ void encolarProceso(int id, int tiempo, int prioridad) {
         nuevo->siguiente = actual->siguiente;
         actual->siguiente = nuevo;
     }
-
     cout << "Proceso numero" << id << " encolado - prioridad: " << prioridad << endl;
 }
 
@@ -194,12 +195,9 @@ void ejecutarProceso() {
         cout << "No hay procesos en cola." << endl;
         return;
     }
-
     Proceso* temp = frente;
     frente = frente->siguiente;
-    cout << "Ejecutando proceso #" << temp->id
-         << " (tiempo: " << temp->tiempoEjecucion
-         << ", prioridad: " << temp->prioridad << ")" << endl;
+    cout << "Ejecutando proceso numero" << temp->id << " (tiempo: " << temp->tiempoEjecucion << ", prioridad: " << temp->prioridad << ")" << endl;
     delete temp;
 }
->>>>>>> f065e008f80692bfb4b2593e6ee5f95f947a30de
+
