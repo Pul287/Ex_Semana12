@@ -1,20 +1,14 @@
-#incube <iostream>
-using namespace std;
-
-//Estructura
-struct Proceso{
+struct Nodo {
     int Proceso;
-    int TiempoEjecucion;
-    int Nprioridad;
-    Proceso* siguiente;
+    Nodo* siguiente;
 
-    Proceso(int id, int tiempo, int prioridad) {
-        idProceso = id;
-        TiempoEjecucion = tiempo;
-        Nprioridad = prioridad
+    Nodo(int numero) {
+        Proceso = numero;
         siguiente = NULL;
+        123
     }
 };
+// Erick Rodriguez
 #include <iostream>
 using namespace std;
 
@@ -90,22 +84,3 @@ int main() {
     return 0;
 }
 
-Proceso* frente = NULL;
-
-void encolarProceso(int id, int tiempo, int prioridad) {
-    Proceso* nuevo = new Proceso(id, tiempo, prioridad);
-
-    if (frente == NULL || prioridad < frente->prioridad) {
-        nuevo->siguiente = frente;
-        frente = nuevo;
-    } else {
-        Proceso* actual = frente;
-        while (actual->siguiente != NULL && actual->siguiente->prioridad <= prioridad) {
-            actual = actual->siguiente;
-        }
-        nuevo->siguiente = actual->siguiente;
-        actual->siguiente = nuevo;
-    }
-
-    cout << "Proceso numero" << id << " encolado - prioridad: " << prioridad << endl;
-}
