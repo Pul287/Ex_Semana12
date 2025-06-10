@@ -1,11 +1,16 @@
-struct Nodo {
-    int Proceso;
-    Nodo* siguiente;
+#incube <iostream>
+using namespace std;
 
-    Nodo(int numero) {
-        Proceso = numero;
+//Estructura
+struct Proceso{
+    int Proceso;
+    int TiempoEjecucion;
+    Proceso* siguiente;
+
+    Proceso(int id, int tiempo) {
+        idProceso = id;
+        TiempoEjecucion = tiempo;
         siguiente = NULL;
-        123
     }
 };
 
