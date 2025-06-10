@@ -84,3 +84,39 @@ int main() {
     return 0;
 }
 
+<<<<<<< HEAD
+=======
+Proceso* frente = NULL;
+
+void encolarProceso(int id, int tiempo, int prioridad) {
+    Proceso* nuevo = new Proceso(id, tiempo, prioridad);
+
+    if (frente == NULL || prioridad < frente->prioridad) {
+        nuevo->siguiente = frente;
+        frente = nuevo;
+    } else {
+        Proceso* actual = frente;
+        while (actual->siguiente != NULL && actual->siguiente->prioridad <= prioridad) {
+            actual = actual->siguiente;
+        }
+        nuevo->siguiente = actual->siguiente;
+        actual->siguiente = nuevo;
+    }
+
+    cout << "Proceso numero" << id << " encolado - prioridad: " << prioridad << endl;
+}
+
+void ejecutarProceso() {
+    if (frente == NULL) {
+        cout << "No hay procesos en cola." << endl;
+        return;
+    }
+
+    Proceso* temp = frente;
+    frente = frente->siguiente;
+    cout << "Ejecutando proceso #" << temp->id
+         << " (tiempo: " << temp->tiempoEjecucion
+         << ", prioridad: " << temp->prioridad << ")" << endl;
+    delete temp;
+}
+>>>>>>> f065e008f80692bfb4b2593e6ee5f95f947a30de
