@@ -217,3 +217,43 @@ void mostrarCola() {
     }
 }
 
+int main(){
+    int opcion, tiempo, prioridad;
+    string nombre;
+    int id = 1;
+    do{
+        cout << "--- Planificador de CPU ---" << endl;
+        cout << "1. Añadir proceso" << endl;
+        cout << "2. Ejecutar proceso" << endl;
+        cout << "3. Mostrar cola" << endl;
+        cout << "4. Salir" << endl;
+        cout << "Selecciona una opcion: ";
+        cin >> opcion;
+
+        switch(opcion){
+            case 1:
+                cout << "Ingrese nombre del proceso: ";
+                cin.ignore();
+                getline(cin, nombre);
+                cout << "Ingrese tiempo de ejecucion: ";
+                cin >> tiempo;
+                cout << "Ingrese su prioridad: ";
+                cin >> prioridad;
+                encolarProceso(id++, nombre, tiempo, prioridad);
+                break;
+            case 2:
+                ejecutarProceso();
+                break;
+            case 3:
+                mostrarCola();
+                break;
+            case 4:
+                cout << "Saliendo del planificador." << endl;
+                break;
+            default:
+                cout << "Opcion no valida." << endl;
+        }
+    } while(opcion != 4);
+    return 0;
+}
+
