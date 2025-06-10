@@ -161,12 +161,14 @@ struct Proceso {
     int id;
     int tiempoEjecucion;
     int prioridad;
+    string nombre;
     Proceso* siguiente;
 
-    Proceso(int id, int tiempo, int prioridad) {
+    Proceso(int id, int tiempo, int prioridad, string nom) {
         idProceso = id;
         TiempoEjecucion = tiempo;
         Nprioridad = prioridad;
+        nombre = nom;
         siguiente = NULL;
     }
 };
@@ -176,12 +178,12 @@ Proceso* frente = NULL;
 void encolarProceso(int id, int tiempo, int prioridad) {
     Proceso* nuevo = new Proceso(id, tiempo, prioridad);
 
-    if (frente == NULL || prioridad < frente->prioridad) {
+    if (frente == NULL || prioridad < frente->Nprioridad) {
         nuevo->siguiente = frente;
         frente = nuevo;
     } else {
         Proceso* actual = frente;
-        while (actual->siguiente != NULL && actual->siguiente->prioridad <= prioridad) {
+        while (actual->siguiente != NULL && actual->siguiente->Nprioridad <= prioridad) {
             actual = actual->siguiente;
         }
         nuevo->siguiente = actual->siguiente;
@@ -197,7 +199,21 @@ void ejecutarProceso() {
     }
     Proceso* temp = frente;
     frente = frente->siguiente;
-    cout << "Ejecutando proceso numero" << temp->id << " (tiempo: " << temp->tiempoEjecucion << ", prioridad: " << temp->prioridad << ")" << endl;
+    cout << "Ejecutando proceso numero" << temp->id << " (tiempo: " << temp->tiempoEjecucion << ", prioridad: " << temp->Nprioridad << ")" << endl;
     delete temp;
+}
+
+void mostrarCola() {
+    if (frente == NULL) {
+        cout << "La cola esta vacia." << endl;
+        return;
+    }
+
+    cout << "Procesos en cola:" << endl;
+    Proceso* actual = frente;
+    while (actual != NULL) {
+        cout << "ID: " << actual->id << " | Tiempo: " << actual->tiempoEjecucion << " | Prioridad: " << actual->Nprioridad << endl;
+        actual = actual->siguiente;
+    }
 }
 
