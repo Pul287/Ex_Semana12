@@ -2,6 +2,7 @@
 using namespace std;
 
 // Erick Rodriguez
+//Estructura diseñada para listas
 struct Proceso {
     int id;
     string nombre;
@@ -9,17 +10,16 @@ struct Proceso {
     string estado;
 };
 
-const int MAX_PROCESOS = 100;
+const int MAX_PROCESOS = 100; //Cantidad maxima aceptada por la lista
 
 Proceso listaProcesos[MAX_PROCESOS];
-int cantidadProcesos = 0;
-
+int cantidadProcesos = 0; //Inicializacion
+//Validacion para agregar procesos
 void agregarProceso() {
     if (cantidadProcesos >= MAX_PROCESOS) {
         cout << "No se pueden agregar más procesos.\n";
         return;
     }
-
     Proceso nuevo;
     cout << "Ingrese ID del proceso: ";
     cin >> nuevo.id;
@@ -141,6 +141,9 @@ void modificarID() {
 //fin erick
 
 //Inicio Pul
+
+//Estructura para uso de colas
+
 struct ProcesoQ {
     int idProceso;
     int TiempoEjecucion;
@@ -156,12 +159,12 @@ struct ProcesoQ {
         siguiente = NULL;
     }
 };
-
+//Inicializacion de inicio de la cola "Nula"
 ProcesoQ* frente = NULL;
 
 void encolarProceso(int id, string nom, int tiempo, int prioridad) {
     ProcesoQ* nuevo = new ProcesoQ(id, nom, tiempo, prioridad);
-
+	//Validacion para agregar colas "Prioridad" - numero menos mas prioridad
     if (frente == NULL || prioridad < frente->Nprioridad) {
         nuevo->siguiente = frente;
         frente = nuevo;
@@ -183,7 +186,7 @@ void ejecutarProceso() {
     }
     ProcesoQ* temp = frente;
     frente = frente->siguiente;
-    cout << "Ejecutando proceso ID: " << temp->idProceso <<"| Nombre: "<< temp->nombre << " tiempo: " << temp->TiempoEjecucion << ", prioridad: " << temp->Nprioridad << endl;
+    cout << "Ejecutando proceso ID: " << temp->idProceso <<"| Nombre: "<< temp->nombre << " | tiempo: " << temp->TiempoEjecucion << " | prioridad: " << temp->Nprioridad << endl;
     delete temp;
 }
 
@@ -204,6 +207,7 @@ void mostrarCola() {
 
 //Gabriela
 
+//estructura para uso de pilas
 struct NodoMemoria {
     int idProceso;
     NodoMemoria* siguiente;
@@ -261,7 +265,7 @@ public:
         }
     }
 };
-
+//Menu que simula el Gestor de procesos
 void gestorprocesos(){
 	int subopcion;
 	do {
@@ -303,7 +307,7 @@ void gestorprocesos(){
 		}
 	} while (subopcion != 7);
 }
-
+//Menu que simula Planificador de CPU
 void planificador(){
 	int tiempo, prioridad, subopcion;
 	string nombre;
@@ -342,7 +346,7 @@ void planificador(){
 		}
 	} while(subopcion != 4);
 }
-
+//Menu que simula el Gestor de memoria
 void gestormemoria(){
 	PilaMemoria memoria;
 	int subopcion, id;
@@ -376,7 +380,7 @@ void gestormemoria(){
     } while (subopcion != 4);
 }
 
-
+//Menu que simula el administrador de tareas de forma general
 int main(){
     int opcion, subopcion, id;
     do{
@@ -390,7 +394,7 @@ int main(){
         
         switch(opcion){
             case 1:
-			    gestorprocesos();
+			    gestorprocesos();//Uso de funciones adecuados para una mejor organizacion.
 			    break;
             case 2:
             	planificador();
