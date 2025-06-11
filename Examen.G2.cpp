@@ -1,7 +1,7 @@
+// Erick Rodriguez
 #include <iostream>
 using namespace std;
 
-// Erick Rodriguez
 struct Proceso {
     int id;
     string nombre;
@@ -138,17 +138,62 @@ void modificarID() {
         cout << "Proceso no encontrado.\n";
     }
 }
-//fin erick
 
-//Inicio Pul
-struct ProcesoQ {
-    int idProceso;
-    int TiempoEjecucion;
-    int Nprioridad;
+int main() {
+    int opcion;
+
+    do {
+        cout << "\n--- MENU ---\n";
+        cout << "1. Agregar proceso\n";
+        cout << "2. Mostrar procesos\n";
+        cout << "3. Eliminar proceso\n";
+        cout << "4. Buscar proceso por ID\n";
+        cout << "5. Modificar ID de un proceso\n";
+        cout << "6. Cambiar el estado del proceso\n";
+        cout << "7. Salir\n";
+        cout << "Seleccione una opción: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                agregarProceso();
+                break;
+            case 2:
+                mostrarProcesos();
+                break;
+            case 3:
+                eliminarProceso();
+                break;
+            case 4:
+                buscarProcesoPorID();
+                break;
+            case 5:
+                modificarID();
+                break;
+            case 6:
+                cambiarEstadoProceso();
+                break;
+            case 7:
+                 cout << "Saliendo del programa realizado\n";
+                break;
+            default:
+                cout << "Opción inválida. Intente nuevamente.\n";
+        }
+
+    } while (opcion != 7);
+
+    return 0;
+}
+
+//Pul
+struct Proceso {
+    int id;
+    int tiempoEjecucion;
+    int prioridad;
     string nombre;
-    ProcesoQ* siguiente;
+    Proceso* siguiente;
 
-    ProcesoQ(int id, string nom, int tiempo, int prioridad) {
+    Proceso(int id, int tiempo, int prioridad, string nom) {
         idProceso = id;
         TiempoEjecucion = tiempo;
         Nprioridad = prioridad;
@@ -157,16 +202,16 @@ struct ProcesoQ {
     }
 };
 
-ProcesoQ* frente = NULL;
+Proceso* frente = NULL;
 
-void encolarProceso(int id, string nom, int tiempo, int prioridad) {
-    ProcesoQ* nuevo = new ProcesoQ(id, nom, tiempo, prioridad);
+void encolarProceso(int id, int tiempo, int prioridad) {
+    Proceso* nuevo = new Proceso(id, tiempo, prioridad);
 
     if (frente == NULL || prioridad < frente->Nprioridad) {
         nuevo->siguiente = frente;
         frente = nuevo;
     } else {
-        ProcesoQ* actual = frente;
+        Proceso* actual = frente;
         while (actual->siguiente != NULL && actual->siguiente->Nprioridad <= prioridad) {
             actual = actual->siguiente;
         }
@@ -181,9 +226,9 @@ void ejecutarProceso() {
         cout << "No hay procesos en cola." << endl;
         return;
     }
-    ProcesoQ* temp = frente;
+    Proceso* temp = frente;
     frente = frente->siguiente;
-    cout << "Ejecutando proceso ID: " << temp->idProceso <<"| Nombre: "<< temp->nombre << " tiempo: " << temp->TiempoEjecucion << ", prioridad: " << temp->Nprioridad << endl;
+    cout << "Ejecutando proceso numero" << temp->id << " (tiempo: " << temp->tiempoEjecucion << ", prioridad: " << temp->Nprioridad << ")" << endl;
     delete temp;
 }
 
@@ -194,202 +239,45 @@ void mostrarCola() {
     }
 
     cout << "Procesos en cola:" << endl;
-    ProcesoQ* actual = frente;
+    Proceso* actual = frente;
     while (actual != NULL) {
-        cout << "ID: " << actual->idProceso <<"| Nombre: "<< actual->nombre << " | Tiempo: " << actual->TiempoEjecucion << " | Prioridad: " << actual->Nprioridad << endl;
+        cout << "ID: " << actual->id << " | Tiempo: " << actual->tiempoEjecucion << " | Prioridad: " << actual->Nprioridad << endl;
         actual = actual->siguiente;
     }
 }
-//fin pul
-
-//Gabriela
-
-struct NodoMemoria {
-    int idProceso;
-    NodoMemoria* siguiente;
-};
-
-class PilaMemoria {
-private:
-    NodoMemoria* cima;
-
-public:
-    PilaMemoria() {
-        cima = NULL;
-    }
-
-    ~PilaMemoria() {
-        while (cima != NULL) {
-            liberarMemoria();
-        }
-    }
-
-    void asignarMemoria(int idProceso) {
-        NodoMemoria* nuevo = new NodoMemoria;
-        if (nuevo == NULL) {
-            cout << "Error al asignar memoria." << endl;
-            return;
-        }
-        nuevo->idProceso = idProceso;
-        nuevo->siguiente = cima;
-        cima = nuevo;
-        cout << "Memoria asignada al proceso " << idProceso<< endl;
-    }
-
-    void liberarMemoria() {
-        if (cima == NULL) {
-            cout << "No hay memoria para liberar." << endl;
-            return;
-        }
-        NodoMemoria* temp = cima;
-        cout << "Liberando memoria del proceso " << temp->idProceso << endl;
-        cima = cima->siguiente;
-        delete temp;
-    }
-
-    void mostrarEstado() {
-        if (cima == NULL) {
-            cout << "La pila de memoria esta vacia." << endl;
-            return;
-        }
-
-        cout << "Estado actual de la memoria :" << endl;
-        NodoMemoria* actual = cima;
-        while (actual != NULL) {
-            cout << "Proceso ID: " << actual->idProceso << endl;
-            actual = actual->siguiente;
-        }
-    }
-};
 
 int main(){
-    int opcion, subopcion, id;
+    int opcion, tiempo, prioridad;
+    string nombre;
+    int id = 1;
     do{
-        cout << "--- Administrador de Tareas ---" << endl;
-        cout << "1. Gestor de procesos" << endl;
-        cout << "2. Planificador de CPU" << endl;
-        cout << "3. Gestor de memoria" << endl;
+        cout << "--- Planificador de CPU ---" << endl;
+        cout << "1. Añadir proceso" << endl;
+        cout << "2. Ejecutar proceso" << endl;
+        cout << "3. Mostrar cola" << endl;
         cout << "4. Salir" << endl;
         cout << "Selecciona una opcion: ";
         cin >> opcion;
-        
+
         switch(opcion){
             case 1:
-			    do {
-			        cout << "\n--- MENU ---\n";
-			        cout << "1. Agregar proceso\n";
-			        cout << "2. Mostrar procesos\n";
-			        cout << "3. Eliminar proceso\n";
-			        cout << "4. Buscar proceso por ID\n";
-			        cout << "5. Modificar ID de un proceso\n";
-			        cout << "6. Cambiar el estado del proceso\n";
-			        cout << "7. Salir\n";
-			        cout << "Seleccione una opción: ";
-			        cin >> subopcion;
-			        switch (subopcion) {
-			            case 1:
-			                agregarProceso();
-			                break;
-			            case 2:
-			                mostrarProcesos();
-			                break;
-			            case 3:
-			                eliminarProceso();
-			                break;
-			            case 4:
-			                buscarProcesoPorID();
-			                break;
-			            case 5:
-			                modificarID();
-			                break;
-			            case 6:
-			                cambiarEstadoProceso();
-			                break;
-			            case 7:
-			                cout << "Saliendo del programa realizado\n";
-			                break;
-			            default:
-			                cout << "Opción inválida. Intente nuevamente.\n";
-			                break;
-			        }
-			    } while (subopcion != 6);
-				return 0;
-   				 
+                cout << "Ingrese nombre del proceso: ";
+                cin.ignore();
+                getline(cin, nombre);
+                cout << "Ingrese tiempo de ejecucion: ";
+                cin >> tiempo;
+                cout << "Ingrese su prioridad: ";
+                cin >> prioridad;
+                encolarProceso(id++, nombre, tiempo, prioridad);
+                break;
             case 2:
-            	int tiempo, prioridad;
-			    string nombre;
-			    id = 1;
-			    do{
-			        cout << "--- Planificador de CPU ---" << endl;
-			        cout << "1. Añadir proceso" << endl;
-			        cout << "2. Ejecutar proceso" << endl;
-			        cout << "3. Mostrar cola" << endl;
-			        cout << "4. Salir" << endl;
-			        cout << "Selecciona una opcion: ";
-			        cin >> subopcion;
-			
-			        switch(subopcion){
-			            case 1:
-			                cout << "Ingrese nombre del proceso: ";
-			                cin.ignore();
-			                getline(cin, nombre);
-			                cout << "Ingrese tiempo de ejecucion: ";
-			                cin >> tiempo;
-			                cout << "Ingrese su prioridad: ";
-			                cin >> prioridad;
-			                encolarProceso(id++, nombre, tiempo, prioridad);
-			                break;
-			            case 2:
-			                ejecutarProceso();
-			                break;
-			            case 3:
-			                mostrarCola();
-			                break;
-			            case 4:
-			                cout << "Saliendo del planificador." << endl;
-			                break;
-			            default:
-			                cout << "Opcion no valida." << endl;
-			                break;
-			        }
-			    } while(subopcion != 4);
-			    return 0;
-			    
-			case 3: {
-				PilaMemoria memoria;
-			    do{
-			        cout << "--- GESTION DE MEMORIA ---";
-			        cout << "1. Asignar memoria a un proceso (Push)";
-			        cout << "2. Liberar memoria (Pop)";
-			        cout << "3. Ver estado de la memoria";
-			        cout << "4. Salir";
-			        cout << "Seleccione una opcion: ";
-			        cin >> subopcion;
-			
-			        switch (subopcion) {
-			            case 1:
-			                cout << "Ingrese el ID del proceso: ";
-			                cin >> id;
-			                memoria.asignarMemoria(id);
-			                break;
-			            case 2:
-			                memoria.liberarMemoria();
-			                break;
-			            case 3:
-			                memoria.mostrarEstado();
-			                break;
-			            case 4:
-			                cout << "Saliendo del programa..." << endl;
-			                break;
-			            default:
-			                cout << "Opcion invalida. Intente nuevamente." << endl;
-			        }
-    			} while (subopcion != 4);
-    			return 0;
-			}
-				
+                ejecutarProceso();
+                break;
+            case 3:
+                mostrarCola();
+                break;
             case 4:
-                cout << "Cerrando administrador. " << endl;
+                cout << "Saliendo del planificador." << endl;
                 break;
             default:
                 cout << "Opcion no valida." << endl;
@@ -397,5 +285,4 @@ int main(){
     } while(opcion != 4);
     return 0;
 }
-
 
