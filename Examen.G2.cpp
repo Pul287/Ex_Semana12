@@ -350,8 +350,9 @@ void planificador(){
 void gestormemoria(){
 	PilaMemoria memoria;
 	int subopcion, id;
+	
 	do{
-		cout << "--- GESTION DE MEMORIA ---";
+		cout << "--- GESTION DE MEMORIA ---" << endl;
 		cout << "1. Asignar memoria a un proceso " << endl;
 		cout << "2. Liberar memoria " << endl;
 		cout << "3. Ver estado de la memoria " << endl;
