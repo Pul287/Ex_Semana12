@@ -301,7 +301,7 @@ void gestorprocesos(){
 			    cout << "Opción inválida. Intente nuevamente.\n";
 			    break;
 		}
-	} while (subopcion != 6);
+	} while (subopcion != 7);
 }
 
 void planificador(){
