@@ -348,10 +348,10 @@ void gestormemoria(){
 	int subopcion, id;
 	do{
 		cout << "--- GESTION DE MEMORIA ---";
-		cout << "1. Asignar memoria a un proceso (Push)";
-		cout << "2. Liberar memoria (Pop)";
-		cout << "3. Ver estado de la memoria";
-		cout << "4. Salir";
+		cout << "1. Asignar memoria a un proceso " << endl;
+		cout << "2. Liberar memoria " << endl;
+		cout << "3. Ver estado de la memoria " << endl;
+		cout << "4. Salir " << endl; 
 		cout << "Seleccione una opcion: ";
 		cin >> subopcion;
 		
