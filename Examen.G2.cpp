@@ -6,6 +6,7 @@ struct Proceso {
     int id;
     string nombre;
     int prioridad;
+    string estado;
 };
 
 const int MAX_PROCESOS = 100;
@@ -43,6 +44,30 @@ void mostrarProcesos() {
     }
     cout << endl;
 }
+
+void cambiarEstadoProceso() {
+    int idBuscar;
+    cout << "Ingrese el ID del proceso al que desea cambiar el estado: ";
+    cin >> idBuscar;
+
+    bool encontrado = false;
+    for (int i = 0; i < cantidadProcesos; i++) {
+        if (listaProcesos[i].id == idBuscar) {
+            cout << "Estado actual: " << listaProcesos[i].estado << endl;
+            cout << "Ingrese el nuevo estado (Listo, En ejecución, Terminado): ";
+            cin.ignore(); 
+            getline(cin, listaProcesos[i].estado);
+            cout << "Estado actualizado correctamente.\n";
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "Proceso no encontrado.\n";
+    }
+}
+
 
 void eliminarProceso() {
     int idEliminar;
@@ -124,7 +149,8 @@ int main() {
         cout << "3. Eliminar proceso\n";
         cout << "4. Buscar proceso por ID\n";
         cout << "5. Modificar ID de un proceso\n";
-        cout << "6. Salir\n";
+        cout << "6. Cambiar el estado del proceso\n";
+        cout << "7. Salir\n";
         cout << "Seleccione una opción: ";
         cin >> opcion;
 
@@ -145,7 +171,10 @@ int main() {
                 modificarID();
                 break;
             case 6:
-                cout << "Saliendo del programa...\n";
+                cambiarEstadoProceso();
+                break;
+            case 7:
+                 cout << "Saliendo del programa realizado\n";
                 break;
             default:
                 cout << "Opción inválida. Intente nuevamente.\n";
