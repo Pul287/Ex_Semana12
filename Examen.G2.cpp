@@ -286,3 +286,100 @@ int main(){
     return 0;
 }
 
+//Gabriela
+
+struct NodoMemoria {
+    int idProceso;
+    NodoMemoria* siguiente;
+};
+
+class PilaMemoria {
+private:
+    NodoMemoria* cima;
+
+public:
+    PilaMemoria() {
+        cima = NULL;
+    }
+
+    ~PilaMemoria() {
+        while (cima != NULL) {
+            liberarMemoria();
+        }
+    }
+
+    void asignarMemoria(int idProceso) {
+        NodoMemoria* nuevo = new NodoMemoria;
+        if (nuevo == NULL) {
+            cout << "Error al asignar memoria." << endl;
+            return;
+        }
+        nuevo->idProceso = idProceso;
+        nuevo->siguiente = cima;
+        cima = nuevo;
+        cout << "Memoria asignada al proceso " << idProceso<< endl;
+    }
+
+    void liberarMemoria() {
+        if (cima == NULL) {
+            cout << "No hay memoria para liberar." << endl;
+            return;
+        }
+        NodoMemoria* temp = cima;
+        cout << "Liberando memoria del proceso " << temp->idProceso << endl;
+        cima = cima->siguiente;
+        delete temp;
+    }
+
+    void mostrarEstado() {
+        if (cima == NULL) {
+            cout << "La pila de memoria esta vacia." << endl;
+            return;
+        }
+
+        cout << "Estado actual de la memoria :" << endl;
+        NodoMemoria* actual = cima;
+        while (actual != NULL) {
+            cout << "Proceso ID: " << actual->idProceso << endl;
+            actual = actual->siguiente;
+        }
+    }
+};
+
+int main() {
+    PilaMemoria memoria;
+    int opcion, id;
+
+    do {
+        cout << "--- GESTION DE MEMORIA ---";
+        cout << "1. Asignar memoria a un proceso (Push)";
+        cout << "2. Liberar memoria (Pop)";
+        cout << "3. Ver estado de la memoria";
+        cout << "4. Salir";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                cout << "Ingrese el ID del proceso: ";
+                cin >> id;
+                memoria.asignarMemoria(id);
+                break;
+            case 2:
+                memoria.liberarMemoria();
+                break;
+            case 3:
+                memoria.mostrarEstado();
+                break;
+            case 4:
+                cout << "Saliendo del programa..." << endl;
+                break;
+            default:
+                cout << "Opcion invalida. Intente nuevamente." << endl;
+        }
+
+    } while (opcion != 4);
+
+    return 0;
+}
+
